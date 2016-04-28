@@ -1,5 +1,5 @@
 FROM phusion/baseimage:0.9.18
-MAINTAINER Erik Larsson <erik.larsson@musiker.nu>
+MAINTAINER monkeydri <monkeydri@users.noreply.github.com>
 
 ENV HOME /root
 
