@@ -32,4 +32,4 @@ RUN svnadmin create /var/svn/$SVN_REPONAME
 ADD svnserve.conf /var/svn/$SVN_REPONAME/conf/svnserve.conf
 
 # To store the data outside the container, mount /svn as a data volume
-VOLUME /svn
+VOLUME /var/svn
