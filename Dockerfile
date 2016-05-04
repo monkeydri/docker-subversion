@@ -13,8 +13,8 @@ CMD ["/sbin/my_init"]
 RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise universe' >> /etc/apt/sources.list
 RUN apt-get -y update
 
-# Install subversion and git including git-svn (to mirror svn repos onto a git remote) and sshpass to remember ssh key passphrase
-RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y subversion git git-svn sshpass
+# Install subversion and git including git-svn (to mirror svn repos onto a git remote) and utils to input ssh key passphrase in script
+RUN LC_ALL=C DEBIAN_FRONTEND=noninteractive apt-get install -y subversion git git-svn spawn expect send interact
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
