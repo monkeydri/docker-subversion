@@ -1,0 +1,34 @@
+#!/bin/sh
+
+#debug post-commit hook
+#USERDIR=$"${~}"
+#echo "user directory is"$USERDIR # > /var/log/bash-post-commit.log
+#printenv ~
+#echo $HOME
+#echo ~
+#echo "user directory is "$HOME  > /var/log/bash-post-commit.log
+
+
+#get path of SVN repo
+SVNREPOPATH="$1"
+
+#extract base path and create similar path with "git-" prefix
+REPOBASEPATH=$(dirname "${SVNREPOPATH}")
+SVNREPONAME=$(basename "${SVNREPOPATH}")
+GITPREFIX="/git-"
+GITREPOPATH=$REPOBASEPATH$GITPREFIX$SVNREPONAME
+
+
+cd $GITREPOPATH
+
+
+#copy config for ssh so ssh key used for git commands is /var/svn/ssh-config/id_rsa_tmc_gitlab (should only be used once, first time that svn-docker is started)
+cp /var/svn/ssh-config/config /root/.ssh
+#copy known_hosts so gitlab ssh key does not need to be re-added (should only be used once, first time that svn-docker is started)
+cp /var/svn/ssh-config/known_hosts /root/.ssh
+
+#get changes from SVN repo (fetch only checks but does not "save" the changes into the git repo
+git svn rebase
+
+#run git push on expect script to input ssh passphrase
+/usr/bin/expect /var/svn/ssh-config/push-ssh "$GITREPOPATH"

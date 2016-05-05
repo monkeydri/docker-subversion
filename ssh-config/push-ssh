@@ -1,0 +1,22 @@
+#!/usr/bin/expect
+
+log_file -noappend /var/log/expect-post-commit.log;
+#send_log  "logtest\n";
+
+#change directory
+set GITREPOPATH [lindex $argv 0];
+cd $GITREPOPATH;
+
+#debug : print GITREPOPATH
+send_log "$GITREPOPATH\n";
+
+#debug : print current directory
+#set CURRENTDIRECTORY [pwd];
+#send_log "$CURRENTDIRECTORY\n";
+
+
+spawn git push -u origin master
+expect "Enter passphrase for key '/var/svn/ssh-config/id_rsa_tmc_gitlab':"
+send "ssh-passphrase\r"
+interact
+expect eof
