@@ -16,7 +16,7 @@ with data stored in `/data/svn` on the host, use the following:
 
     docker run -v /data/svn:/var/svn \
                -e SVN_REPONAME=repos \
-               -d erikxiv/subversion
+               -d monkeydri/svn-docker
 
 You can find out which port the LDAP server is bound to on the host by running
 `docker ps` (or `docker port <container_id> 3690`). You could then verify svn connectivity so:
